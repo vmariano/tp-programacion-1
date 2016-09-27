@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/nivel.unity
+- path: Assets/Pantallas/MainMenu.unity
   isLoaded: 1
   isActive: 1
