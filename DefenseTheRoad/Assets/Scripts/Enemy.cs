@@ -20,10 +20,15 @@ public class Enemy : MonoBehaviour
         direction.y -= 1f;
         Body.velocity = direction * Speed;
 	    Debug.Log(direction);
-        if (Body.position.x < -6 || Body.position.y < -5  )
-	    {
-	        Destroy(this);
-	    }
+	    DestroyIfNecesary();
+	}
+
+    private void DestroyIfNecesary()
+    {
+        if (Body.position.x < -6 || Body.position.y < -5)
+        {
+            Destroy(this);
+        }
     }
 
     Vector3 GetPosition()
