@@ -29,7 +29,7 @@ sysinfo.txt
 *.apk
 *.unitypackage
 
-
+*UnityLockfile
 
 # ============ #
 # OS generated #
