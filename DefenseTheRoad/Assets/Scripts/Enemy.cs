@@ -19,7 +19,6 @@ public class Enemy : MonoBehaviour
         direction.x -= 1f ;
         direction.y -= 1f;
         Body.velocity = direction * Speed;
-	    Debug.Log(direction);
 	    DestroyIfNecesary();
 	}
 
@@ -31,9 +30,9 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    Vector3 GetPosition()
+    public Vector3 GetPosition()
     {
-        return Body.velocity;
+        return Body.position;
     }
     
 

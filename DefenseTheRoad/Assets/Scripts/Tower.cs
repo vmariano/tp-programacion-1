@@ -8,15 +8,16 @@ public class Tower : MonoBehaviour
 
 	// Use this for initialization
 	void Start () {
-	
+	    
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	    this.Move();
-	}
+        this.ShootToEnemy();
+    }
 
-    void Move() {
-        
+    void ShootToEnemy()
+    {
+           
     }
 }
