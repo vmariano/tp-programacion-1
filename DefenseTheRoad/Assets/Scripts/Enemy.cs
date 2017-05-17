@@ -1,39 +1,42 @@
 ﻿using System;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class Enemy : MonoBehaviour
 {
-    public Rigidbody2D Body;
-    public float Speed = 1f;
-
+    protected Rigidbody2D Body;
+    public float Speed;
 	// Use this for initialization
 	void Start ()
 	{
-	    Body = GetComponent<Rigidbody2D>();
+        Body = this.GetComponent<Rigidbody2D>();
+	    this.Speed = 1;
 	}
 	
 	// Update is called once per frame
 	void Update ()
 	{
-        Vector3 direction = new Vector3();
-        direction.x -= 1f ;
-        direction.y -= 1f;
-        Body.velocity = direction * Speed;
-	    DestroyIfNecesary();
-	}
-
-    private void DestroyIfNecesary()
-    {
-        if (Body.position.x < -6 || Body.position.y < -5)
-        {
-            Destroy(this);
-        }
+	    this.Move();
+       // Body.transform.Rotate(0,0, 10f);
+       // Debug.Log(Body.transform.rotation);
     }
 
-    public Vector3 GetPosition()
+    private void Move()
     {
-        return Body.position;
+        var d = new Vector2();
+        d.x -= 1f;
+        d.y -= 1f;
+        Body.velocity = d * Speed;
     }
-    
 
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        //Destroy(this.gameObject);
+    }
+
+    void OnTriggerEnter(Collider collider)
+    {
+        //Si la collision tiene un enemy, me interesa, sino, ignoro.
+        Debug.Log("on trigger");
+    }
 }

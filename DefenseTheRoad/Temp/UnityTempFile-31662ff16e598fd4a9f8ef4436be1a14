@@ -86,8 +86,9 @@
 -define:UNITY_TEAM_LICENSE
 -define:ENABLE_VSTU
 Assets/Scripts/Enemy.cs
+Assets/Scripts/EnemySpawner.cs
 Assets/Scripts/Main.cs
-Assets/Scripts/Shoots.cs
+Assets/Scripts/Shoot.cs
 Assets/Scripts/Tower.cs
 Assets/Scripts/Wave.cs
 -r:"C:\Program Files\Unity\Editor\Data\Mono\lib\mono\unity\System.Runtime.Serialization.dll"
