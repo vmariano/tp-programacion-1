@@ -4,34 +4,31 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Enemy : MonoBehaviour
 {
-    protected Rigidbody2D Body;
+    public Rigidbody2D Body;
+    public GameObject Point;
     public float Speed;
 	// Use this for initialization
 	void Start ()
-	{
+    {
         Body = this.GetComponent<Rigidbody2D>();
-	    this.Speed = 1;
-	}
-	
-	// Update is called once per frame
-	void Update ()
-	{
-	    this.Move();
-       // Body.transform.Rotate(0,0, 10f);
-       // Debug.Log(Body.transform.rotation);
+        this.Speed = 0.3f;
     }
 
-    private void Move()
+    // Update is called once per frame
+    void Update ()
+	{
+        // Body.transform.Rotate(0,0,10f);
+        this.MoveTo(Point.transform.position);
+    }
+
+    private void MoveTo(Vector3 endingPosition)
     {
-        var d = new Vector2();
-        d.x -= 1f;
-        d.y -= 1f;
-        Body.velocity = d * Speed;
+        Body.velocity = Vector3.MoveTowards(Body.position, endingPosition, 100f) * Speed;
     }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        //Destroy(this.gameObject);
+        Destroy(this.gameObject);
     }
 
     void OnTriggerEnter(Collider collider)

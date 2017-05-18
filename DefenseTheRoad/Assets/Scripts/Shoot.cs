@@ -16,14 +16,12 @@ public class Shoot : MonoBehaviour
     
     // Update is called once per frame
 	void Update () {
-	    var direction = new Vector3();
-	    direction.x += 1f;
-	    direction.y -= 1f;
-	    Body.velocity = direction * Speed;
+        Vector3 endingPosition = new Vector3();
+        Body.velocity = Vector3.MoveTowards(Body.position, endingPosition, 100f) * Speed;
     }
 
     void OnCollisionEnter2D(Collision2D colission)
     {
-        //Destroy(this.gameObject);
+        Destroy(this.gameObject);
     }
 }

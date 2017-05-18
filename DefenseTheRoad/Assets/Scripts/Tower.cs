@@ -9,8 +9,8 @@ public class Tower : MonoBehaviour
     public GameObject bullet;
     public List<GameObject> EnemysInRange;
     private int aux;
-    
-    
+    private int rateOfFire = 100;
+
     // Use this for initialization
     void Start ()
     {
@@ -19,9 +19,12 @@ public class Tower : MonoBehaviour
 
     // Update is called once per frame
     void Update () {
-        if (aux == 100)
+        if (aux == rateOfFire)
         {
-            //this.FireToEnemy(new GameObject());
+            if (EnemysInRange.Count() > 0)
+            {
+                this.FireToEnemy(EnemysInRange.First());
+            }
             aux = 0;
         }
         aux++;
@@ -29,22 +32,22 @@ public class Tower : MonoBehaviour
 
     public void FireToEnemy(GameObject enemy)
     {
-
         var rotation = Quaternion.identity;
         GameObject.Instantiate(bullet, this.transform.position, rotation);
     }
 
-   void OnTriggerEnter(Collider collider)
+    void OnTriggerEnter2D(Collider2D collider)
     {
-
-        //Si la collision tiene un enemy, me interesa, sino, ignoro.
         var enemy = collider.gameObject;
-        Debug.Log(enemy);
-        //if (enemy.GetType() == typeof(Enemy))
-        //{
-        //    EnemysInRange.Add(enemy);
-        //}
+        if (enemy.tag == "enemy")
+        {
+            EnemysInRange.Add(enemy);
+        }
+    }
 
+    void OnTriggerExit2D(Collider2D collider)
+    {        
+        EnemysInRange.Remove(collider.gameObject);
     }
 
     void OnCollisionEnter2D(Collision2D collision)
