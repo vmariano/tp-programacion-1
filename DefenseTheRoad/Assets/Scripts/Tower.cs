@@ -6,10 +6,12 @@ using System.Linq;
 
 public class Tower : MonoBehaviour
 {
-    public GameObject bullet;
+    public GameObject Bullet;
     public List<GameObject> EnemysInRange;
     private int aux;
-    private int rateOfFire = 100;
+
+    // Cada 75 fps lanza un bullet
+    private int rateOfFire = 50;
 
     // Use this for initialization
     void Start ()
@@ -33,7 +35,9 @@ public class Tower : MonoBehaviour
     public void FireToEnemy(GameObject enemy)
     {
         var rotation = Quaternion.identity;
-        GameObject.Instantiate(bullet, this.transform.position, rotation);
+        GameObject bullet = GameObject.Instantiate(Bullet, this.transform.position, rotation);
+        Shoot shoot = (Shoot)bullet.gameObject.GetComponent(typeof(Shoot));
+        shoot.TargetTransform = enemy.transform;
     }
 
     void OnTriggerEnter2D(Collider2D collider)
@@ -48,10 +52,5 @@ public class Tower : MonoBehaviour
     void OnTriggerExit2D(Collider2D collider)
     {        
         EnemysInRange.Remove(collider.gameObject);
-    }
-
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        Debug.Log("On colission enter  ");
     }
 }
