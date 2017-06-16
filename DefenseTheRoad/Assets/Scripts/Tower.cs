@@ -1,6 +1,4 @@
-﻿using System;
-using UnityEngine;
-using System.Collections;
+﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,42 +6,36 @@ public class Tower : MonoBehaviour
 {
     public GameObject Bullet;
     public List<GameObject> EnemysInRange;
-    private int aux;
-
-    // Cada 75 fps lanza un bullet
-    private int rateOfFire = 50;
-
-    // Use this for initialization
-    void Start ()
-    {
-        aux = 0;    
-    }
+    private float _rateOfFire  = 4.5f;
+    private float _coldownFire = 4.5f;
 
     // Update is called once per frame
-    void Update () {
-        if (aux == rateOfFire)
+    void Update ()
+    {
+        if (EnemysInRange.Any())
         {
-            if (EnemysInRange.Count() > 0)
+            _coldownFire -= Time.deltaTime;
+            if (_coldownFire <= 0)
             {
-                this.FireToEnemy(EnemysInRange.First());
+                Debug.Log("Disparo!");
+                FireToEnemy(EnemysInRange.First());
+                _coldownFire = _rateOfFire; 
             }
-            aux = 0;
         }
-        aux++;
     }
 
     public void FireToEnemy(GameObject enemy)
     {
         var rotation = Quaternion.identity;
-        GameObject bullet = GameObject.Instantiate(Bullet, this.transform.position, rotation);
-        Shoot shoot = (Shoot)bullet.gameObject.GetComponent(typeof(Shoot));
+        GameObject bullet = Instantiate(Bullet, transform.position, rotation);
+        Shoot shoot = bullet.gameObject.GetComponent<Shoot>();
         shoot.TargetTransform = enemy.transform;
     }
 
     void OnTriggerEnter2D(Collider2D collider)
     {
         var enemy = collider.gameObject;
-        if (enemy.tag == "enemy")
+        if (enemy.CompareTag("enemy"))
         {
             EnemysInRange.Add(enemy);
         }

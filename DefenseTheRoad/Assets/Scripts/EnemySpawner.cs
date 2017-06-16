@@ -1,33 +1,19 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
     public GameObject enemy;
-    public int aux;
+    public int rateOfSpawn;
 
     // Use this for initialization
     void Start ()
 	{
-	    aux = 0;
-	}
-
-    // Update is called once per frame
-	void Update () {
-	    
-	    if (aux == 170)
-	    {
-	        this.CreateEnemy();
-	        aux = 0;
-	    }
-	    aux++;
+	    InvokeRepeating("CreateEnemy", 0, rateOfSpawn); 
     }
 
     private void CreateEnemy()
     {
-        var rotation = Quaternion.identity;
-        rotation.Set(rotation.x, rotation.y, -30f, rotation.w);
-        GameObject.Instantiate(this.enemy, this.transform.position, rotation);
+        var theNewEnemy = Instantiate(enemy, transform.position, Quaternion.identity);
+        theNewEnemy.transform.Rotate(0,0,-120f);
     }
 }

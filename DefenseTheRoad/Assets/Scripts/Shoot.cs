@@ -1,34 +1,40 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Shoot : MonoBehaviour
 {
     public Rigidbody2D Body;
-    private float Speed;
-        
     public Transform TargetTransform { get; set; }
 
+    private float Speed;
+    private int RateOfFire;
+
     // Use this for initialization
-    void Start ()
+    void Start()
     {
-        Speed = 1f;
-	    Body = this.GetComponent<Rigidbody2D>();
-    }
-    
-    // Update is called once per frame
-	void Update () 
-    {
-        this.MoveTo(this.TargetTransform);
+        Speed = 5f;
+        Body = GetComponent<Rigidbody2D>();
     }
 
-    private void MoveTo(Transform endingPosition)
+    // Update is called once per frame
+    void Update()
     {
-        Body.transform.position = Vector3.MoveTowards(Body.position, endingPosition.position, 1000f) * Speed;
+        MoveTo(TargetTransform.position);
+    }
+    
+    private void MoveTo(Vector3 endingPosition)
+    {
+        var currentSpeed = Speed;
+        Body.velocity = (endingPosition - transform.position).normalized * currentSpeed;  
     }
 
     void OnCollisionEnter2D(Collision2D colission)
     {
-        Destroy(this.gameObject);
+        Die();
+    }
+
+    private void Die()
+    {
+        Destroy(gameObject);
     }
 }
