@@ -12,7 +12,7 @@ public class Shoot : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        Speed = 5f;
+        Speed = 130f;
         Body = GetComponent<Rigidbody2D>();
     }
 
@@ -24,7 +24,7 @@ public class Shoot : MonoBehaviour
     
     private void MoveTo(Vector3 endingPosition)
     {
-        var currentSpeed = Speed;
+        var currentSpeed = Speed * Time.deltaTime;
         Body.velocity = (endingPosition - transform.position).normalized * currentSpeed;  
     }
 

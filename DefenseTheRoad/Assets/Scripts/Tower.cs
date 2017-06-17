@@ -6,22 +6,21 @@ public class Tower : MonoBehaviour
 {
     public GameObject Bullet;
     public List<GameObject> EnemysInRange;
-    private float _rateOfFire  = 4.5f;
-    private float _coldownFire = 4.5f;
+    private float _rateOfFire  = 2.5f;
+    private float _coldownFire = 2.5f;
 
     // Update is called once per frame
     void Update ()
     {
-        if (EnemysInRange.Any())
+        _coldownFire -= Time.deltaTime;
+        if (_coldownFire <= 0)
         {
-            _coldownFire -= Time.deltaTime;
-            if (_coldownFire <= 0)
+            if (EnemysInRange.Any())
             {
-                Debug.Log("Disparo!");
                 FireToEnemy(EnemysInRange.First());
-                _coldownFire = _rateOfFire; 
             }
-        }
+            _coldownFire = _rateOfFire; 
+        }        
     }
 
     public void FireToEnemy(GameObject enemy)
