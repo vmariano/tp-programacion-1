@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Lifetime;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -9,12 +10,14 @@ public class Enemy : MonoBehaviour
     public Rigidbody2D Body;
     public List<Vector3> Path;
     public float Speed;
+    protected int TotalLife;
     
     void Start ()
     {
         Body = GetComponent<Rigidbody2D>();
         Path = PathSaver.PathForLevel_3();
         Speed = 100f;
+        TotalLife = 2;
     }
 
     // Update is called once per frame
@@ -35,16 +38,25 @@ public class Enemy : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("shoot")) 
+        if(collision.gameObject.CompareTag("shoot")) 
         {
-            //Todo: implementar puntos
-            Debug.Log("Me mataron");
+            Debug.Log("Me mataron :(");
+            TotalLife -= 1;
+            if (TotalLife == 0)
+            {
+                Die();
+            }
         } 
         else
         {
-            //TODO: implementar restado de vidas.
+            //TODO: implementar restado de vidas Al jugador.
             Debug.Log("Me escape!!");
+            Die();
         }
+    }
+
+    private void Die()
+    {
         Destroy(gameObject);
     }
 }

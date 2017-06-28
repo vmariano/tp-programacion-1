@@ -12,7 +12,7 @@ public class Shoot : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        Speed = 130f;
+        Speed = 150f;
         Body = GetComponent<Rigidbody2D>();
     }
 
