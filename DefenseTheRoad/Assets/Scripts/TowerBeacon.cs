@@ -1,14 +1,20 @@
 ﻿using UnityEngine;
 
 public class TowerBeacon : MonoBehaviour {
-	
+	private SpriteRenderer _sprite;
+	public GameObject Bacon;
+
 	private void Start()
 	{
-		Debug.Log("Cargo el bacon");	
+		this._sprite = this.Bacon.GetComponent<SpriteRenderer>();
 	}
 
-	private void OnMouseDown()
+	void Update()
 	{
-		Debug.Log("Click aca");
+		if (Input.GetMouseButtonDown(0))
+		{
+			this._sprite.color = Color.gray;
+			Debug.Log("click aca");
+		}	
 	}
 }
