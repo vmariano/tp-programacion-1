@@ -13,7 +13,6 @@ public class EnemySpawner : MonoBehaviour
 
     private void CreateEnemy()
     {
-        var theNewEnemy = Instantiate(enemy, transform.position, Quaternion.identity);
-        theNewEnemy.transform.Rotate(0,0,-120f);
+        Instantiate(enemy, transform.position, Quaternion.identity);
     }
 }
