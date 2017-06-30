@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Remoting.Lifetime;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Enemy : MonoBehaviour
@@ -42,7 +43,7 @@ public class Enemy : MonoBehaviour
         var distance = (endingPosition - transform.position);
         Body.velocity = distance.normalized * Speed * Time.deltaTime;
         //Esto le agrega rotation, para el lado que quiero que vaya a doblar y lo va a haciendo progresivo
-        this.transform.right = Vector3.Lerp(this.transform.right, distance.normalized, 0.3f);
+        //this.transform.right = Vector3.Lerp(this.transform.right, distance.normalized, 0.3f);
         // El enemigo ya llego.
         if (this.IsEnemyNearOf(endingPosition)) {
             this._currentPosition += 1;
@@ -58,18 +59,32 @@ public class Enemy : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.CompareTag("shoot")) 
+        if(collision.gameObject.CompareTag("shoot"))
         {
-            this.GoldBar.AddItem();
-            TotalLife -= 1;
-            if (TotalLife == 0)
-            {
-                Die();
-            }
+            this.KillEnemy();
         } 
         else
         {
-            this.StrikeBar.AddItem();
+            this.EnemyScape();
+        }
+    }
+
+    private void EnemyScape()
+    {
+        this.StrikeBar.AddItem();
+        if (this.StrikeBar.IsFull())
+        {
+            SceneManager.LoadScene("GameOver");
+        }
+        Die();
+    }
+
+    private void KillEnemy()
+    {
+        this.GoldBar.AddItem();
+        TotalLife -= 1;
+        if (TotalLife == 0)
+        {
             Die();
         }
     }

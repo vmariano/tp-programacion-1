@@ -5,6 +5,8 @@ using UnityEngine;
 public class ProgressBar : MonoBehaviour
 {
 	public List<SpriteRenderer> BarItems;
+	public int total;
+	public int max = 13;
 	
 	void Start () 
 	{
@@ -23,6 +25,10 @@ public class ProgressBar : MonoBehaviour
 		}
 	}
 
+	public bool IsFull()
+	{
+		return this.total == this.max;
+	}
 
 	public void AddItem()
 	{
@@ -31,6 +37,7 @@ public class ProgressBar : MonoBehaviour
 		{
 			this.ShowFragment(firstSpriteOrEmpty);
 		}
+		this.total += 1;
 	}
 
 	public void AddAll()
@@ -38,9 +45,35 @@ public class ProgressBar : MonoBehaviour
 		foreach (var sprite in BarItems)
 		{
 			this.ShowFragment(sprite);
-		}	
+		}
+		this.total = this.max;
 	}
 
+	public void RemoveItem()
+	{
+		var lastSpriteOrEmpty = this.BarItems.FindLast((x => x.color ==  Color.white));
+		if (lastSpriteOrEmpty != null)
+		{
+			this.HideFragment(lastSpriteOrEmpty);
+		}
+		this.total -= 1;
+	}
+
+
+	public void RemoveAll()
+	{
+		foreach (var sprite in BarItems)
+		{
+			this.HideFragment(sprite);
+		}
+		this.total = 0;
+	}
+
+	private void HideFragment(SpriteRenderer sprite)
+	{
+		sprite.color = Color.clear;
+	}
+	
 	private void ShowFragment(SpriteRenderer sprite)
 	{
 		if (this.gameObject.CompareTag("strikes"))
@@ -51,27 +84,5 @@ public class ProgressBar : MonoBehaviour
 		{
 			sprite.color = Color.white;
 		}
-	}
-
-	public void RemoveItem()
-	{
-		var lastSpriteOrEmpty = this.BarItems.FindLast((x => x.color ==  Color.white));
-		if (lastSpriteOrEmpty != null)
-		{
-			this.HideFragment(lastSpriteOrEmpty);
-		}
-	}
-
-	public void RemoveAll()
-	{
-		foreach (var sprite in BarItems)
-		{
-			this.HideFragment(sprite);
-		}
-	}
-
-	private void HideFragment(SpriteRenderer sprite)
-	{
-		sprite.color = Color.clear;
 	}
 }

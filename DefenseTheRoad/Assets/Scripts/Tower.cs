@@ -28,7 +28,10 @@ public class Tower : MonoBehaviour
         var rotation = Quaternion.identity;
         GameObject bullet = Instantiate(Bullet, transform.position, rotation);
         Shoot shoot = bullet.gameObject.GetComponent<Shoot>();
-        shoot.TargetTransform = enemy.transform;
+        if (enemy != null)
+        {
+            shoot.TargetTransform = enemy.transform;
+        }
     }
 
     void OnTriggerEnter2D(Collider2D collider)
