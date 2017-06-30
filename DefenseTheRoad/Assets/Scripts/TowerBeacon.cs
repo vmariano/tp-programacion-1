@@ -1,8 +1,17 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class TowerBeacon : MonoBehaviour {
 	private SpriteRenderer _sprite;
 	public GameObject Tower;
+	public ProgressBar GoldBar;
+
+
+	private void Start()
+	{
+		this.GoldBar = GameObject.Find("Oro").GetComponent<ProgressBar>();
+
+	}
 
 	private void OnMouseOver()
 	{
@@ -29,5 +38,14 @@ public class TowerBeacon : MonoBehaviour {
 		var towerHeigth = 0.76f;
 		var position = new Vector3(this.transform.position.x, this.transform.position.y + towerHeigth);
 		Instantiate(this.Tower, position, Quaternion.identity);
+		this.RemoveGold();
 	}
+
+	private void RemoveGold()
+	{
+		this.GoldBar.RemoveItem();
+		this.GoldBar.RemoveItem();
+		this.GoldBar.RemoveItem();
+	}
+
 }
