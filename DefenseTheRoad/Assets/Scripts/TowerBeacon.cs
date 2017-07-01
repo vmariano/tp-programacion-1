@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class TowerBeacon : MonoBehaviour {
 	private SpriteRenderer _sprite;
@@ -10,7 +9,6 @@ public class TowerBeacon : MonoBehaviour {
 	private void Start()
 	{
 		this.GoldBar = GameObject.Find("Oro").GetComponent<ProgressBar>();
-
 	}
 
 	private void OnMouseOver()
@@ -18,7 +16,10 @@ public class TowerBeacon : MonoBehaviour {
 		this.SetColorToSprite(Color.gray);
 		if (Input.GetMouseButtonDown(0))
 		{
-			this.CreateTower();
+			if (this.GoldBar.total >= 3)
+			{
+				this.CreateTower();
+			}
 		}	
 	}
 

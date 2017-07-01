@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Remoting.Lifetime;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,12 +8,13 @@ public class Enemy : MonoBehaviour
 {
     public Rigidbody2D Body;
     public List<Vector3> Path;
-    public float Speed;
-    protected int TotalLife;
-    private WaypointManager _aWaypointManager;
-    private int _currentPosition;
     public ProgressBar StrikeBar;
     public ProgressBar GoldBar;
+    public float Speed;
+    public int TotalLife;
+    
+    private WaypointManager _aWaypointManager;
+    private int _currentPosition;
 
     void Start()
     {
@@ -23,7 +22,6 @@ public class Enemy : MonoBehaviour
         this._currentPosition = 0;
         this._aWaypointManager = GameObject.Find("waypoints").GetComponent<WaypointManager>();
         Path = this._aWaypointManager.GetPath();
-        TotalLife = 2;
         this.StrikeBar = GameObject.Find("Strikes").GetComponent<ProgressBar>();
         this.GoldBar = GameObject.Find("Oro").GetComponent<ProgressBar>();
     }
@@ -40,10 +38,8 @@ public class Enemy : MonoBehaviour
 
     private void MoveTo(Vector3 endingPosition)
     {
-        var distance = (endingPosition - transform.position);
-        Body.velocity = distance.normalized * Speed * Time.deltaTime;
+        Body.velocity = (endingPosition - transform.position).normalized * Speed * Time.deltaTime;
         //Esto le agrega rotation, para el lado que quiero que vaya a doblar y lo va a haciendo progresivo
-        //this.transform.right = Vector3.Lerp(this.transform.right, distance.normalized, 0.3f);
         // El enemigo ya llego.
         if (this.IsEnemyNearOf(endingPosition)) {
             this._currentPosition += 1;
@@ -63,7 +59,8 @@ public class Enemy : MonoBehaviour
         {
             this.KillEnemy();
         } 
-        else
+        
+        if(collision.gameObject.CompareTag("scape"))
         {
             this.EnemyScape();
         }
@@ -81,10 +78,10 @@ public class Enemy : MonoBehaviour
 
     private void KillEnemy()
     {
-        this.GoldBar.AddItem();
         TotalLife -= 1;
         if (TotalLife == 0)
         {
+            this.GoldBar.AddItem();
             Die();
         }
     }

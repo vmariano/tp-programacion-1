@@ -14,14 +14,19 @@ public class ProgressBar : MonoBehaviour
 		//Siempre remuevo el base sprite.
 		var baseSprite = this.gameObject.GetComponent<SpriteRenderer>();
 		this.BarItems.Remove(baseSprite);
-		this.SetupForStrikes();
+		this.RemoveAll();
+		this.SetupForGold();
 	}
 
-	private void SetupForStrikes()
+	private void SetupForGold()
 	{
-		if (this.gameObject.CompareTag("strikes"))
+		if (!this.gameObject.CompareTag("strikes"))
 		{
 			this.RemoveAll();
+			this.AddItem();	
+			this.AddItem();	
+			this.AddItem();	
+			this.AddItem();	
 		}
 	}
 

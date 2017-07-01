@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class Main : MonoBehaviour {
 
@@ -16,6 +17,10 @@ public class Main : MonoBehaviour {
 		
 		if (Input.GetKeyDown("c")){
 			Time.timeScale = 1;
+		}
+
+		if (Input.GetKeyDown("r")){
+			SceneManager.LoadScene("MainMenu");
 		}
 	}
 }
