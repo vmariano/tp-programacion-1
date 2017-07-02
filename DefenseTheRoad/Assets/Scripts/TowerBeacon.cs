@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TowerBeacon : MonoBehaviour {
 	private SpriteRenderer _sprite;
@@ -36,14 +37,17 @@ public class TowerBeacon : MonoBehaviour {
 
 	private void CreateTower()
 	{
+		this.RemoveGold();
 		var towerHeigth = 0.76f;
 		var position = new Vector3(this.transform.position.x, this.transform.position.y + towerHeigth);
 		Instantiate(this.Tower, position, Quaternion.identity);
-		this.RemoveGold();
+		Destroy(this.gameObject);
 	}
 
 	private void RemoveGold()
 	{
+		var scene = SceneManager.GetActiveScene();
+		Debug.Log(scene.name);
 		this.GoldBar.RemoveItem();
 		this.GoldBar.RemoveItem();
 		this.GoldBar.RemoveItem();

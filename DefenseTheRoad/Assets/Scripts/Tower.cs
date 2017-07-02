@@ -20,7 +20,6 @@ public class Tower : MonoBehaviour
             {
                 FireToEnemy(EnemysInRange.Last());
                 _coldownFire = _resetFire;
-                this.CleanEnemies();
             }
         }        
     }
@@ -40,7 +39,7 @@ public class Tower : MonoBehaviour
         Shoot shoot = bullet.gameObject.GetComponent<Shoot>();
         if (enemy != null)
         {
-            shoot.TargetTransform = enemy.transform;
+            shoot.TargetEnemy = enemy.transform;
         }
     }
 
@@ -50,11 +49,17 @@ public class Tower : MonoBehaviour
         if (enemy.CompareTag("enemy"))
         {
             EnemysInRange.Add(enemy);
+            enemy.GetComponent<Enemy>().Tower = this.gameObject;
         }
     }
 
     void OnTriggerExit2D(Collider2D collider)
     {        
-        EnemysInRange.Remove(collider.gameObject);
+        this.RemoveFromCollection(collider.gameObject);
+    }
+
+    public void RemoveFromCollection(GameObject go)
+    {
+        EnemysInRange.Remove(go);
     }
 }

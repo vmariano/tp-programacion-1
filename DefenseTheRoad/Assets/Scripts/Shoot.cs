@@ -4,23 +4,18 @@
 public class Shoot : MonoBehaviour
 {
     public Rigidbody2D Body;
-    public Transform TargetTransform { get; set; }
-
-    public float Speed;
-    private int RateOfFire;
-
-    // Use this for initialization
+    public Transform TargetEnemy { get; set; }
+    public float Speed;  
     void Start()
     {
         Body = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (TargetTransform != null)
+        if (TargetEnemy != null)
         {
-            MoveTo(TargetTransform.position);
+            MoveTo(TargetEnemy.position);
         }
         else
         {

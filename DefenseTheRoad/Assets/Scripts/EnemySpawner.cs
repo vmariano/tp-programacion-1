@@ -1,16 +1,22 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
+//La condicion de victoria deberia ser.
+// - No quedan mas enemigos en pantalla.
+// - No quedan mas waves pendientes.
+// - Los strikes no llegaron al maximo.
 public class EnemySpawner : MonoBehaviour
 {
-    public GameObject enemy;
-    public int rateOfSpawn;
+    public int RateOfSpawn;
+    public GameObject WaveGameObject;
+    
     private float _coldownSpawn;
-    public int elapsedEnemies;
-
+    private Wave _wave; 
+    
     private void Start()
     {
-        _coldownSpawn = this.rateOfSpawn; 
+        _coldownSpawn = this.RateOfSpawn;
+        this._wave = this.WaveGameObject.GetComponent<Wave>();
     }
 
     private void Update()
@@ -18,59 +24,13 @@ public class EnemySpawner : MonoBehaviour
         this._coldownSpawn -= Time.deltaTime;
         if (this._coldownSpawn <= 0)
         {
-	        this.CreateEnemy(); 
-            _coldownSpawn = this.rateOfSpawn; 
-        }             
-    }
-
-    private void CreateEnemy()
-    {
-        var enemyGameObject = Instantiate(enemy, transform.position, Quaternion.identity);
-        elapsedEnemies += 1;
-        if (elapsedEnemies <= 5)
-        {
-            this.CreateFirstWave(enemyGameObject);
+            this._wave.CreateEnemy();
+            _coldownSpawn = this.RateOfSpawn; 
         }
-        else if (elapsedEnemies <= 15)
+       
+        if (_wave.IsWaveInactives())
         {
-            this.CreateSecondWave(enemyGameObject);
-        }
-        else if (elapsedEnemies <= 16)
-        {
-            this.CreateBossWave(enemyGameObject);
-        } else if (elapsedEnemies <= 17)
-        {
-            SceneManager.LoadScene("YouWin");
+           SceneManager.LoadScene("YouWin");
         }
     }
-
-    // 10 enemigos, vida 1. velocidad 50
-    void CreateFirstWave(GameObject enemy)
-    {
-        Enemy anEnemy = enemy.gameObject.GetComponent<Enemy>();
-        anEnemy.Speed = 60;
-        anEnemy.TotalLife = 2;
-     
-    }
-        
-    // 10 enemigos, vida 3. velocidad 70
-    void CreateSecondWave(GameObject enemy)
-    {
-        Enemy anEnemy = enemy.gameObject.GetComponent<Enemy>();
-        enemy.GetComponent<SpriteRenderer>().color = Color.magenta;
-        anEnemy.Speed = 80;
-        anEnemy.TotalLife = 4;
-    }
-    
-    // 1 enemgio de 15 de vida velocidad 130
-    void CreateBossWave(GameObject enemy)
-    {
-        Enemy anEnemy = enemy.gameObject.GetComponent<Enemy>();
-        enemy.GetComponent<SpriteRenderer>().color = Color.gray;
-        anEnemy.Speed = 130;
-        anEnemy.TotalLife = 20;
-    }
-    
-
-
 }

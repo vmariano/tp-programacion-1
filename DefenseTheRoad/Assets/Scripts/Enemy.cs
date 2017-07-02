@@ -12,6 +12,8 @@ public class Enemy : MonoBehaviour
     public ProgressBar GoldBar;
     public float Speed;
     public int TotalLife;
+    public GameObject Tower { get; set; }
+    public GameObject Wave { get; set; }
     
     private WaypointManager _aWaypointManager;
     private int _currentPosition;
@@ -41,6 +43,7 @@ public class Enemy : MonoBehaviour
         Body.velocity = (endingPosition - transform.position).normalized * Speed * Time.deltaTime;
         //Esto le agrega rotation, para el lado que quiero que vaya a doblar y lo va a haciendo progresivo
         // El enemigo ya llego.
+        this.transform.right = Vector3.Lerp(this.transform.right, (endingPosition - transform.position).normalized, 0.5f);
         if (this.IsEnemyNearOf(endingPosition)) {
             this._currentPosition += 1;
         }
@@ -88,6 +91,9 @@ public class Enemy : MonoBehaviour
 
     private void Die()
     {
+        this.Tower.GetComponent<Tower>().RemoveFromCollection(this.gameObject);
+        this.Wave.GetComponent<Wave>().RemoveFromCollection(this.gameObject);
         Destroy(gameObject);
     }
+
 }
