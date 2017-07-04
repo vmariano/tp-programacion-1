@@ -17,7 +17,7 @@ public class TowerBeacon : MonoBehaviour {
 		this.SetColorToSprite(Color.gray);
 		if (Input.GetMouseButtonDown(0))
 		{
-			if (this.GoldBar.total >= 3)
+			if (this.GoldBar.Total >= 3)
 			{
 				this.CreateTower();
 			}
@@ -47,7 +47,6 @@ public class TowerBeacon : MonoBehaviour {
 	private void RemoveGold()
 	{
 		var scene = SceneManager.GetActiveScene();
-		Debug.Log(scene.name);
 		this.GoldBar.RemoveItem();
 		this.GoldBar.RemoveItem();
 		this.GoldBar.RemoveItem();

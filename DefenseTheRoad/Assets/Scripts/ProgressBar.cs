@@ -5,11 +5,12 @@ using UnityEngine;
 public class ProgressBar : MonoBehaviour
 {
 	public List<SpriteRenderer> BarItems;
-	public int total;
-	public int max = 13;
+	public int Total;
+	public int Max = 13;
 	
-	void Start () 
+	void Start ()
 	{
+		this.Total = this.Max;
 		this.BarItems = this.gameObject.GetComponentsInChildren<SpriteRenderer>().ToList();
 		//Siempre remuevo el base sprite.
 		var baseSprite = this.gameObject.GetComponent<SpriteRenderer>();
@@ -32,7 +33,7 @@ public class ProgressBar : MonoBehaviour
 
 	public bool IsFull()
 	{
-		return this.total == this.max;
+		return this.Total >= this.Max;
 	}
 
 	public void AddItem()
@@ -42,7 +43,7 @@ public class ProgressBar : MonoBehaviour
 		{
 			this.ShowFragment(firstSpriteOrEmpty);
 		}
-		this.total += 1;
+		this.Total += 1;
 	}
 
 	public void AddAll()
@@ -51,7 +52,7 @@ public class ProgressBar : MonoBehaviour
 		{
 			this.ShowFragment(sprite);
 		}
-		this.total = this.max;
+		this.Total = this.Max;
 	}
 
 	public void RemoveItem()
@@ -61,7 +62,7 @@ public class ProgressBar : MonoBehaviour
 		{
 			this.HideFragment(lastSpriteOrEmpty);
 		}
-		this.total -= 1;
+		this.Total -= 1;
 	}
 
 
@@ -71,7 +72,7 @@ public class ProgressBar : MonoBehaviour
 		{
 			this.HideFragment(sprite);
 		}
-		this.total = 0;
+		this.Total = 0;
 	}
 
 	private void HideFragment(SpriteRenderer sprite)

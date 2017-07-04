@@ -14,56 +14,61 @@ public class Enemy : MonoBehaviour
     public int TotalLife;
     public GameObject Tower { get; set; }
     public GameObject Wave { get; set; }
-    
-    private WaypointManager _aWaypointManager;
-    private int _currentPosition;
+    public int DamageAssigned;
 
-    void Start()
+    private WaypointManager _aWaypointManager;
+    private int _waitPointIndex;
+
+    private void Start()
     {
         Body = GetComponent<Rigidbody2D>();
-        this._currentPosition = 0;
+        this._waitPointIndex = 0;
         this._aWaypointManager = GameObject.Find("waypoints").GetComponent<WaypointManager>();
         Path = this._aWaypointManager.GetPath();
         this.StrikeBar = GameObject.Find("Strikes").GetComponent<ProgressBar>();
         this.GoldBar = GameObject.Find("Oro").GetComponent<ProgressBar>();
     }
 
-    // Update is called once per frame
-    void Update ()
-	{
-	    if (this._currentPosition <= Path.Count)
-	    {
-	        var point = Path[this._currentPosition];
-	        MoveTo(point);
-	    }
+    private void Update()
+    {
+        if (this._waitPointIndex <= Path.Count)
+        {
+            var point = Path[this._waitPointIndex];
+            MoveTo(point);
+        }
     }
 
     private void MoveTo(Vector3 endingPosition)
     {
-        Body.velocity = (endingPosition - transform.position).normalized * Speed * Time.deltaTime;
+        var distanceNormalized = (endingPosition - transform.position).normalized;
+        Body.velocity = distanceNormalized * Speed * Time.deltaTime;
         //Esto le agrega rotation, para el lado que quiero que vaya a doblar y lo va a haciendo progresivo
-        // El enemigo ya llego.
-        this.transform.right = Vector3.Lerp(this.transform.right, (endingPosition - transform.position).normalized, 0.5f);
-        if (this.IsEnemyNearOf(endingPosition)) {
-            this._currentPosition += 1;
+        this.transform.right = Vector3.Lerp(this.transform.right, distanceNormalized, 0.5f);
+        //Si ya llego, paso al siguiente waitpoint.
+        if (this.IsEnemyNearOf(endingPosition))
+        {
+            //Igualo, para que no haga esa rotacion goma.
+            this.transform.position = endingPosition;
+            this._waitPointIndex += 1;
         }
     }
 
     private bool IsEnemyNearOf(Vector3 endingPosition)
     {
         //Si el enemigo esta cerca del x,y, los x,y coinciden los endingPosition.
-        return Math.Abs(transform.position.x - endingPosition.x) < 0.3f &&
-               Math.Abs(transform.position.y - endingPosition.y) < 0.3f;
+        var distance = endingPosition - transform.position;
+        return Math.Abs(distance.x) <= 0.1f &&
+               Math.Abs(distance.y) <= 0.1f;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.CompareTag("shoot"))
+        if (collision.gameObject.CompareTag("shoot"))
         {
             this.KillEnemy();
-        } 
-        
-        if(collision.gameObject.CompareTag("scape"))
+        }
+
+        if (collision.gameObject.CompareTag("scape"))
         {
             this.EnemyScape();
         }
@@ -71,7 +76,11 @@ public class Enemy : MonoBehaviour
 
     private void EnemyScape()
     {
-        this.StrikeBar.AddItem();
+        for (int i = 0; i < this.DamageAssigned; i++)
+        {
+            this.StrikeBar.AddItem();
+        }
+        
         if (this.StrikeBar.IsFull())
         {
             SceneManager.LoadScene("GameOver");
@@ -91,9 +100,11 @@ public class Enemy : MonoBehaviour
 
     private void Die()
     {
-        this.Tower.GetComponent<Tower>().RemoveFromCollection(this.gameObject);
+        if (Tower != null)
+        {
+            this.Tower.GetComponent<Tower>().RemoveFromCollection(this.gameObject);
+        }
         this.Wave.GetComponent<Wave>().RemoveFromCollection(this.gameObject);
         Destroy(gameObject);
     }
-
 }

@@ -23,33 +23,36 @@ public class Wave : MonoBehaviour
 		switch (this.ActiveWave)
 		{
 			case Waves.First:
-				// 10 enemigos,velocidad 60 vida 2. 
-				SetupWave(3, 60, 2, Waves.Second);
+				// 4 enemigos,velocidad 60 vida 2. 
+				SetupWave(4, 60, 2, 1 ,Waves.Second);
 				break;
 			case Waves.Second:
 				// 8 enemigos, 80 speed, 4 de vida.
-				this.SetupWave(3,80,4,Waves.Thirt)
+				this.SetupWave(9,80,4, 3 ,Waves.Thirt)
 					.GetComponent<SpriteRenderer>().color = Color.magenta;
 				break;
 			case Waves.Thirt:
-					this.SetupWave(3,100,5,Waves.Boss)
+					// 6 enemigos, 100 speed, 5 de vida.
+					this.SetupWave(6,100,5, 5, Waves.Boss)
 						.GetComponent<SpriteRenderer>().color = Color.blue;
 				break;
 			case Waves.Boss:
-				this.SetupWave(1,140, 30, Waves.Inactive)
+				// 1 enemigos, 140 speed, 30 de vida.
+				this.SetupWave(1,140, 8, 9, Waves.Inactive)
 					.GetComponent<SpriteRenderer>().color = Color.gray;
 				break;
 		}
 		this.EnemyCount += 1;
 	}
   
-	private GameObject SetupWave(int totalEnemies, int speed, int life, Waves nextWave)
+	private GameObject SetupWave(int totalEnemies, int speed, int life, int damage ,Waves nextWave)
 	{
 		var enemy = Instantiate(Enemy, transform.position, Quaternion.identity);
 		this.Enemies.Add(enemy);
 		Enemy anEnemy = enemy.gameObject.GetComponent<Enemy>();
 		anEnemy.Speed = speed;
 		anEnemy.TotalLife = life;
+		anEnemy.DamageAssigned = damage;
 		anEnemy.Wave = this.gameObject;
 		if (this.EnemyCount == totalEnemies)
 		{
