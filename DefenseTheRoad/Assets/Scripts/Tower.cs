@@ -6,21 +6,30 @@ public class Tower : MonoBehaviour
 {
     public GameObject Bullet;
     public List<GameObject> EnemysInRange;
-    private float _rateOfFire  = 2.5f;
-    private float _coldownFire = 2.5f;
+    private float _resetFire  = 2.5f;
+    private float _coldownFire;
 
+    
     // Update is called once per frame
     void Update ()
     {
         _coldownFire -= Time.deltaTime;
-        if (_coldownFire <= 0)
+        if (EnemysInRange.Any())
         {
-            if (EnemysInRange.Any())
+            if (_coldownFire <= 0f)
             {
-                FireToEnemy(EnemysInRange.First());
+                FireToEnemy(EnemysInRange.Last());
+                _coldownFire = _resetFire;
             }
-            _coldownFire = _rateOfFire; 
         }        
+    }
+
+    private void CleanEnemies()
+    {
+        if (this.EnemysInRange.Count > 5)
+        {
+            this.EnemysInRange.Clear();
+        }
     }
 
     public void FireToEnemy(GameObject enemy)
@@ -28,7 +37,10 @@ public class Tower : MonoBehaviour
         var rotation = Quaternion.identity;
         GameObject bullet = Instantiate(Bullet, transform.position, rotation);
         Shoot shoot = bullet.gameObject.GetComponent<Shoot>();
-        shoot.TargetTransform = enemy.transform;
+        if (enemy != null)
+        {
+            shoot.TargetEnemy = enemy.transform;
+        }
     }
 
     void OnTriggerEnter2D(Collider2D collider)
@@ -37,11 +49,17 @@ public class Tower : MonoBehaviour
         if (enemy.CompareTag("enemy"))
         {
             EnemysInRange.Add(enemy);
+            enemy.GetComponent<Enemy>().Tower = this.gameObject;
         }
     }
 
     void OnTriggerExit2D(Collider2D collider)
     {        
-        EnemysInRange.Remove(collider.gameObject);
+        this.RemoveFromCollection(collider.gameObject);
+    }
+
+    public void RemoveFromCollection(GameObject go)
+    {
+        EnemysInRange.Remove(go);
     }
 }

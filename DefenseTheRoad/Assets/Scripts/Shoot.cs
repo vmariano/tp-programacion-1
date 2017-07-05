@@ -4,22 +4,24 @@
 public class Shoot : MonoBehaviour
 {
     public Rigidbody2D Body;
-    public Transform TargetTransform { get; set; }
-
-    private float Speed;
-    private int RateOfFire;
-
-    // Use this for initialization
+    public Transform TargetEnemy { get; set; }
+    public float Speed;  
     void Start()
     {
-        Speed = 150f;
         Body = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        MoveTo(TargetTransform.position);
+        if (TargetEnemy != null)
+        {
+            MoveTo(TargetEnemy.position);
+        }
+        else
+        {
+            //Si perdi la referencia DEBO MORIR!
+            this.Die();
+        }
     }
     
     private void MoveTo(Vector3 endingPosition)
@@ -30,7 +32,10 @@ public class Shoot : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D colission)
     {
-        Die();
+        if (colission.gameObject.CompareTag("enemy"))
+        {
+            Die();
+        }
     }
 
     private void Die()
