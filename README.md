@@ -41,10 +41,12 @@ Se tendrán en cuenta para la aprobación de este trabajo los siguientes ítems:
 - Que el código sea eficiente (EJ: Se usa un bucle en lugar de un bloque de líneas de código que repiten la misma estructura).
 - Se considerará negativamente que el alumno haya copiado y pegado código fuente hecho en clase.
 
+---
+
 ## Segunda Parte
 Luego de haber tenido la experiencia en el TP anterior de encarar un juego con objetivos de principio a fin, la finalidad ahora es que el juego sea más que una demo una versión más avanzada, con más contenido que el anterior.
 
-###CONSIGNA:
+### CONSIGNA:
 Realizar un videojuego utilizando las herramientas vistas en clase hasta la fecha (no es obligatorio que contenga todas). 
 El mismo debe contener:
 
