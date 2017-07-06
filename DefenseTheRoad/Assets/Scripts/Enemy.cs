@@ -121,7 +121,7 @@ public class Enemy : MonoBehaviour
         {
             SceneManager.LoadScene("GameOver");
         }
-        Invoke("Die", 1); 
+        Die(); 
     }
 
     private void KillEnemy()
@@ -131,7 +131,7 @@ public class Enemy : MonoBehaviour
         {
             this.GoldBar.AddItem();
             this.PlayDeath();
-            Invoke("Die", 1); 
+            Die(); 
         }
     }
 
@@ -142,6 +142,13 @@ public class Enemy : MonoBehaviour
             this.Tower.GetComponent<Tower>().RemoveFromCollection(this.gameObject);
         }
         this.Wave.GetComponent<Wave>().RemoveFromCollection(this.gameObject);
+
+        //ESto podria ir en el colider en lugar de en el enemigo.
+        if (SoundSource.isPlaying)
+        {
+            InvokeRepeating("Die",0,0.3f);
+            return;
+        }
         Destroy(gameObject);
     }
 

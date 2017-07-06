@@ -20,7 +20,7 @@ public class Main : MonoBehaviour {
 		}
 
 		if (Input.GetKeyDown("r")){
-			SceneManager.LoadScene("MainMenu");
+			SceneManager.LoadScene("LevelSelect");
 		}
 	}
 }
