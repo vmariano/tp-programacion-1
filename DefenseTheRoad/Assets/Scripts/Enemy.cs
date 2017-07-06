@@ -8,6 +8,8 @@ public class Enemy : MonoBehaviour
 {
     public Rigidbody2D Body;
     public List<Vector3> Path;
+    public Sprite SpriteA;
+    public Sprite SpriteB;
     public ProgressBar StrikeBar;
     public ProgressBar GoldBar;
     public float Speed;
@@ -15,7 +17,7 @@ public class Enemy : MonoBehaviour
     public GameObject Tower { get; set; }
     public GameObject Wave { get; set; }
     public int DamageAssigned;
-
+ 
     private WaypointManager _aWaypointManager;
     private int _waitPointIndex;
 
@@ -28,6 +30,7 @@ public class Enemy : MonoBehaviour
         this.StrikeBar = GameObject.Find("Strikes").GetComponent<ProgressBar>();
         this.GoldBar = GameObject.Find("Oro").GetComponent<ProgressBar>();
     }
+
 
     private void Update()
     {
@@ -50,6 +53,34 @@ public class Enemy : MonoBehaviour
             //Igualo, para que no haga esa rotacion goma.
             this.transform.position = endingPosition;
             this._waitPointIndex += 1;
+            this.SetSpriteFor(this._waitPointIndex);
+        }
+    }
+
+    private void SetSpriteFor(int waitPointIndex)
+    {
+        var spriteRender = this.gameObject.GetComponent<SpriteRenderer>();
+        switch (waitPointIndex)
+        {
+            case 0: //derecha
+                spriteRender.sprite = SpriteA;
+                spriteRender.flipY = false;                
+                break;
+            case 1: //Arriba
+                spriteRender.sprite = SpriteB;
+                break;
+            case 2: //derecha
+                spriteRender.sprite = SpriteA;
+                spriteRender.flipY = false;                
+                break;
+            case 3: // abajo
+                spriteRender.sprite = SpriteA;
+                spriteRender.flipY = true;
+                break;
+            case 4: //derecha
+                spriteRender.sprite = SpriteA;
+                spriteRender.flipY = false;
+                break;
         }
     }
 
