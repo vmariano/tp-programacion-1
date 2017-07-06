@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -18,6 +17,10 @@ public class Enemy : MonoBehaviour
     public GameObject Tower { get; set; }
     public GameObject Wave { get; set; }
     public int DamageAssigned;
+
+    public AudioClip DeadFx;
+    public AudioClip ScapeFx;
+    public AudioSource SoundSource;
  
     private WaypointManager _aWaypointManager;
     private int _waitPointIndex;
@@ -30,6 +33,7 @@ public class Enemy : MonoBehaviour
         Path = this._aWaypointManager.GetPath();
         this.StrikeBar = GameObject.Find("Strikes").GetComponent<ProgressBar>();
         this.GoldBar = GameObject.Find("Oro").GetComponent<ProgressBar>();
+        this.SoundSource = this.GetComponent<AudioSource>();
     }
 
 
@@ -108,16 +112,16 @@ public class Enemy : MonoBehaviour
 
     private void EnemyScape()
     {
+        this.PlayScape();
         for (int i = 0; i < this.DamageAssigned; i++)
         {
             this.StrikeBar.AddItem();
         }
-        
         if (this.StrikeBar.IsFull())
         {
             SceneManager.LoadScene("GameOver");
         }
-        Die();
+        Invoke("Die", 1); 
     }
 
     private void KillEnemy()
@@ -126,7 +130,8 @@ public class Enemy : MonoBehaviour
         if (TotalLife == 0)
         {
             this.GoldBar.AddItem();
-            Die();
+            this.PlayDeath();
+            Invoke("Die", 1); 
         }
     }
 
@@ -138,5 +143,17 @@ public class Enemy : MonoBehaviour
         }
         this.Wave.GetComponent<Wave>().RemoveFromCollection(this.gameObject);
         Destroy(gameObject);
+    }
+
+    private void PlayDeath()
+    {
+        if (SoundSource.isPlaying) return;
+        SoundSource.PlayOneShot(DeadFx);
+    }
+    
+    private void PlayScape()
+    {
+       if (SoundSource.isPlaying) return;
+       SoundSource.PlayOneShot(ScapeFx);
     }
 }
