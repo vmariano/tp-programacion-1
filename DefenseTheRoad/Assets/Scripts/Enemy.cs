@@ -24,6 +24,7 @@ public class Enemy : MonoBehaviour
  
     private WaypointManager _aWaypointManager;
     private int _waitPointIndex;
+    private SpriteRenderer _spriteRender;
 
     private void Start()
     {
@@ -34,8 +35,8 @@ public class Enemy : MonoBehaviour
         this.StrikeBar = GameObject.Find("Strikes").GetComponent<ProgressBar>();
         this.GoldBar = GameObject.Find("Oro").GetComponent<ProgressBar>();
         this.SoundSource = this.GetComponent<AudioSource>();
+        this._spriteRender = this.gameObject.GetComponent<SpriteRenderer>();
     }
-
 
     private void Update()
     {
@@ -64,29 +65,95 @@ public class Enemy : MonoBehaviour
 
     private void SetSpriteFor(int waitPointIndex)
     {
-        var spriteRender = this.gameObject.GetComponent<SpriteRenderer>();
-        switch (waitPointIndex)
+        //Por favor, perdonenme. 
+        if (SceneManager.GetActiveScene().name.Equals("Level1"))
         {
-            case 0: //derecha
-                spriteRender.sprite = SpriteA;
-                spriteRender.flipY = false;                
+            switch (waitPointIndex)
+            {
+                case 0: //derecha
+                    this.Rigth();         
+                    break;
+                case 1: //Arriba
+                    this.Up();
+                    break;
+                case 2: //derecha
+                    this.Rigth();                
+                    break;
+                case 3: // abajo
+                    this.Down();
+                    break;
+                case 4: //derecha
+                    this.Rigth();
+                    break;
+            }
+        } else if (SceneManager.GetActiveScene().name.Equals("Level2"))
+        {
+            switch (waitPointIndex)
+            {
+                case 0: //derecha
+                    this.Rigth();         
+                    break;
+                case 1: //Arriba
+                    this.Up();
+                    break;
+                case 2: //derecha
+                    this.Rigth();                
+                    break;
+                case 3: // abajo
+                    this.Down();
+                    break;
+                case 4: //derecha
+                    this.Rigth();
+                    break;                
+                case 5: //derecha
+                    this.Up();
+                    break;
+            }
+        } else if (SceneManager.GetActiveScene().name.Equals("Level3"))
+        {
+            switch (waitPointIndex)
+            {
+                case 0: //derecha
+                    this.Rigth();         
+                    break;
+                case 1: //Arriba
+                    this.Up();
+                    break;
+                case 2: //derecha
+                    this.Rigth();                
+                    break;
+                case 3: // abajo
+                    this.Down();
+                    break;
+                case 4: //derecha
+                    this.Rigth();
+                    break;  
+                case 5: //derecha
+                    this.Up();
+                break;  
+                case 6: //derecha
+                    this.Rigth();
                 break;
-            case 1: //Arriba
-                spriteRender.sprite = SpriteB;
-                break;
-            case 2: //derecha
-                spriteRender.sprite = SpriteA;
-                spriteRender.flipY = false;                
-                break;
-            case 3: // abajo
-                spriteRender.sprite = SpriteA;
-                spriteRender.flipY = true;
-                break;
-            case 4: //derecha
-                spriteRender.sprite = SpriteA;
-                spriteRender.flipY = false;
-                break;
+            }
         }
+  
+    }
+
+    private void Down()
+    {
+        this._spriteRender.sprite = SpriteA;
+        this._spriteRender.flipY = true;
+    }
+
+    private void Up()
+    {
+        this._spriteRender.sprite = SpriteB;
+    }
+
+    private void Rigth()
+    {
+        _spriteRender.sprite = SpriteA;
+        _spriteRender.flipY = false;       
     }
 
     private bool IsEnemyNearOf(Vector3 endingPosition)

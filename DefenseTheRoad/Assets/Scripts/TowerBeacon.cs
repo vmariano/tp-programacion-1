@@ -55,7 +55,6 @@ public class TowerBeacon : MonoBehaviour {
 
 	private void RemoveGold()
 	{
-		//var scene = SceneManager.GetActiveScene();
 		this.GoldBar.RemoveItem();
 		this.GoldBar.RemoveItem();
 		this.GoldBar.RemoveItem();
