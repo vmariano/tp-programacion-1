@@ -24,15 +24,15 @@ public class MenuButton : MonoBehaviour
       if (Input.GetMouseButtonDown(0))
       {
          this.PlaySound();
-         this.LoadScene(SoundsFx.length);
+         this.LoadScene();
       }
    }
 
-   private void LoadScene(float delay)
+   private void LoadScene()
    {
       if (SoundSource.isPlaying)
       {
-         InvokeRepeating("LoadScene", 0, delay + 0.1f); 
+         InvokeRepeating("LoadScene", 0, SoundsFx.length  + 0.1f); 
          return;
       }
       if (TargetLoad.Equals("salir"))
@@ -64,6 +64,6 @@ public class MenuButton : MonoBehaviour
          SoundSource.PlayOneShot(SoundsFx);
       }
       yield return new WaitForSeconds(SoundsFx.length + 0.1f);
-      LoadScene(0);
+      LoadScene();
    }
 }
