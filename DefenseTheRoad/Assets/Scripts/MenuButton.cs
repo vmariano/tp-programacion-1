@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MenuButton : MonoBehaviour
@@ -23,18 +24,17 @@ public class MenuButton : MonoBehaviour
       if (Input.GetMouseButtonDown(0))
       {
          this.PlaySound();
-         this.LoadScene();
+         this.LoadScene(SoundsFx.length);
       }
    }
 
-   private void LoadScene()
+   private void LoadScene(float delay)
    {
       if (SoundSource.isPlaying)
       {
-         InvokeRepeating("LoadScene", 0, 1); 
+         InvokeRepeating("LoadScene", 0, delay + 0.1f); 
          return;
       }
-      
       if (TargetLoad.Equals("salir"))
       {
          Application.Quit();
@@ -54,5 +54,16 @@ public class MenuButton : MonoBehaviour
    {
       if (SoundSource.isPlaying) return;
       SoundSource.PlayOneShot(SoundsFx);
+   }
+
+   //Esto nunca anduvo.  ¯\_(ツ)_/¯
+   private IEnumerable LoadAsyncLevel()
+   {  
+      if (!SoundSource.isPlaying)
+      {
+         SoundSource.PlayOneShot(SoundsFx);
+      }
+      yield return new WaitForSeconds(SoundsFx.length + 0.1f);
+      LoadScene(0);
    }
 }
