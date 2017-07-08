@@ -5,11 +5,13 @@ public class TowerBeacon : MonoBehaviour {
 	private SpriteRenderer _sprite;
 	public GameObject Tower;
 	public ProgressBar GoldBar;
-
+	public AudioSource SoundSource;
+	public AudioClip NopeFx;
 
 	private void Start()
 	{
 		this.GoldBar = GameObject.Find("Oro").GetComponent<ProgressBar>();
+		this.SoundSource = this.GetComponent<AudioSource>();
 	}
 
 	private void OnMouseOver()
@@ -20,6 +22,13 @@ public class TowerBeacon : MonoBehaviour {
 			if (this.GoldBar.Total >= 3)
 			{
 				this.CreateTower();
+			}
+			else
+			{
+				if (!SoundSource.isPlaying)
+				{
+					SoundSource.PlayOneShot(NopeFx);
+				}
 			}
 		}	
 	}
@@ -46,10 +55,8 @@ public class TowerBeacon : MonoBehaviour {
 
 	private void RemoveGold()
 	{
-		var scene = SceneManager.GetActiveScene();
 		this.GoldBar.RemoveItem();
 		this.GoldBar.RemoveItem();
 		this.GoldBar.RemoveItem();
 	}
-
 }

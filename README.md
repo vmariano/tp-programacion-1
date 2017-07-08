@@ -6,9 +6,7 @@ OBJETIVO DEL TP:
 El objetivo del trabajo práctico es que los alumnos aprendan a encarar solos un videojuego sencillo, para que se adapten a la forma de desarrollo del mismo.
 
 CONSIGNA:
-
 Realizar un videojuego utilizando las herramientas vistas en clase hasta la fecha. El mismo debe contener:
-
 - Menu principal con pantalla de créditos (con los datos del alumno).
 - Animaciones utilizando spritesheets.
 - Posibilidad de ganar o perder.
@@ -31,16 +29,44 @@ Debe contener los datos del alumno en un archivo dentro del proyecto y de manera
 El juego debe tener creado un ejecutable (archivo .exe), para poder probarlo sin necesidad de compilarlo.
 
 NO PUEDE contener material usado en ejemplos de la clase transcriptos tal cual se hicieron (ni código, ni diseños, y ningún tipo de assets). Deberán, en tal caso, contener código que resuelva la parte incompleta de cada script (EJ: Al script de la clase de plataformas le falta hacer que el personaje no se pegue a las paredes/plataformas).
-
 NO SE ACEPTARÁN correcciones o terminar el juego DURANTE la clase en la que se entrega.
-
 NO SE ACEPTARÁN proyectos que no estén en la misma versión que las PCs de Da Vinci. 
+Cualquier proyecto entregado DESPUÉS de los 45 minutos de arrancada la clase no se aceptará.
+
+### CRITERIOS DE EVALUACIÓN
+Se tendrán en cuenta para la aprobación de este trabajo los siguientes ítems:
+- La correcta utilización y justificación de las herramientas vistas en clase.
+- Que el código sea eficiente (EJ: Se usa un bucle en lugar de un bloque de líneas de código que repiten la misma estructura).
+- Se considerará negativamente que el alumno haya copiado y pegado código fuente hecho en clase.
+
+---
+
+## Segunda Parte
+Luego de haber tenido la experiencia en el TP anterior de encarar un juego con objetivos de principio a fin, la finalidad ahora es que el juego sea más que una demo una versión más avanzada, con más contenido que el anterior.
+
+CONSIGNA:
+Realizar un videojuego utilizando las herramientas vistas en clase hasta la fecha (no es obligatorio que contenga todas). 
+El mismo debe contener:
+- TODO LO QUE TENÍA EL TP ANTERIOR (ver consignas de TP 1).
+- Mínimo 3 niveles completos.
+- Música de fondo en el menú.
+- Sonidos en TODAS las acciones del jugador, incluyendo el sonido correspondiente en el feedback (ver consignas de TP 1).
+ 
+TIPO DE TRABAJO:  Individual o de a dos personas
+PAUTAS DE PRESENTACIÓN: Digital.
+ 
+El trabajo debe ser entregado en CD/DVD con todos los assets del juego (código, archivos externos, etc), en una caja de plástico.
+Debe contener los datos del alumno en un archivo dentro del proyecto y de manera externa en la misma caja.
+El juego debe tener creado un ejecutable (archivo .exe), para poder probarlo sin necesidad de compilarlo.
+
+- NO PUEDE contener material usado en ejemplos de la clase transcriptos tal cual se hicieron (ni código, ni diseños, y ningún tipo de assets). Deberán, en tal caso, contener código que resuelva la parte incompleta de cada script (EJ: Al script de la clase de plataformas le falta hacer que el personaje no se pegue a las paredes/plataformas).
+- NO SE ACEPTARÁN correcciones o terminar el juego DURANTE la clase en la que se entrega.
+- NO SE ACEPTARÁN proyectos que no estén en la misma versión que las PCs de Da Vinci. 
 
 Cualquier proyecto entregado DESPUÉS de los 45 minutos de arrancada la clase no se aceptará.
 
 ### CRITERIOS DE EVALUACIÓN
-
 Se tendrán en cuenta para la aprobación de este trabajo los siguientes ítems:
-La correcta utilización y justificación de las herramientas vistas en clase.
-Que el código sea eficiente (EJ: Se usa un bucle en lugar de un bloque de líneas de código que repiten la misma estructura).
-Se considerará negativamente que el alumno haya copiado y pegado código fuente hecho en clase.
+- La correcta utilización y justificación de las herramientas vistas en clase.
+- Que el código sea eficiente (EJ: Se usa un bucle en lugar de un bloque de líneas de código que repiten la misma estructura).
+- Se considerará negativamente que el alumno haya copiado y pegado código fuente hecho en clase.

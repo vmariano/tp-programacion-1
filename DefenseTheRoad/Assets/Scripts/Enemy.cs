@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -18,9 +17,14 @@ public class Enemy : MonoBehaviour
     public GameObject Tower { get; set; }
     public GameObject Wave { get; set; }
     public int DamageAssigned;
+
+    public AudioClip DeadFx;
+    public AudioClip ScapeFx;
+    public AudioSource SoundSource;
  
     private WaypointManager _aWaypointManager;
     private int _waitPointIndex;
+    private SpriteRenderer _spriteRender;
 
     private void Start()
     {
@@ -30,8 +34,9 @@ public class Enemy : MonoBehaviour
         Path = this._aWaypointManager.GetPath();
         this.StrikeBar = GameObject.Find("Strikes").GetComponent<ProgressBar>();
         this.GoldBar = GameObject.Find("Oro").GetComponent<ProgressBar>();
+        this.SoundSource = this.GetComponent<AudioSource>();
+        this._spriteRender = this.gameObject.GetComponent<SpriteRenderer>();
     }
-
 
     private void Update()
     {
@@ -60,29 +65,95 @@ public class Enemy : MonoBehaviour
 
     private void SetSpriteFor(int waitPointIndex)
     {
-        var spriteRender = this.gameObject.GetComponent<SpriteRenderer>();
-        switch (waitPointIndex)
+        //Por favor, perdonenme. 
+        if (SceneManager.GetActiveScene().name.Equals("Level1"))
         {
-            case 0: //derecha
-                spriteRender.sprite = SpriteA;
-                spriteRender.flipY = false;                
+            switch (waitPointIndex)
+            {
+                case 0: //derecha
+                    this.Rigth();         
+                    break;
+                case 1: //Arriba
+                    this.Up();
+                    break;
+                case 2: //derecha
+                    this.Rigth();                
+                    break;
+                case 3: // abajo
+                    this.Down();
+                    break;
+                case 4: //derecha
+                    this.Rigth();
+                    break;
+            }
+        } else if (SceneManager.GetActiveScene().name.Equals("Level2"))
+        {
+            switch (waitPointIndex)
+            {
+                case 0: //derecha
+                    this.Rigth();         
+                    break;
+                case 1: //Arriba
+                    this.Up();
+                    break;
+                case 2: //derecha
+                    this.Rigth();                
+                    break;
+                case 3: // abajo
+                    this.Down();
+                    break;
+                case 4: //derecha
+                    this.Rigth();
+                    break;                
+                case 5: //derecha
+                    this.Up();
+                    break;
+            }
+        } else if (SceneManager.GetActiveScene().name.Equals("Level3"))
+        {
+            switch (waitPointIndex)
+            {
+                case 0: //derecha
+                    this.Rigth();         
+                    break;
+                case 1: //Arriba
+                    this.Up();
+                    break;
+                case 2: //derecha
+                    this.Rigth();                
+                    break;
+                case 3: // abajo
+                    this.Down();
+                    break;
+                case 4: //derecha
+                    this.Rigth();
+                    break;  
+                case 5: //derecha
+                    this.Up();
+                break;  
+                case 6: //derecha
+                    this.Rigth();
                 break;
-            case 1: //Arriba
-                spriteRender.sprite = SpriteB;
-                break;
-            case 2: //derecha
-                spriteRender.sprite = SpriteA;
-                spriteRender.flipY = false;                
-                break;
-            case 3: // abajo
-                spriteRender.sprite = SpriteA;
-                spriteRender.flipY = true;
-                break;
-            case 4: //derecha
-                spriteRender.sprite = SpriteA;
-                spriteRender.flipY = false;
-                break;
+            }
         }
+  
+    }
+
+    private void Down()
+    {
+        this._spriteRender.sprite = SpriteA;
+        this._spriteRender.flipY = true;
+    }
+
+    private void Up()
+    {
+        this._spriteRender.sprite = SpriteB;
+    }
+
+    private void Rigth()
+    {
+        _spriteRender.sprite = SpriteA;
+        _spriteRender.flipY = false;       
     }
 
     private bool IsEnemyNearOf(Vector3 endingPosition)
@@ -108,16 +179,16 @@ public class Enemy : MonoBehaviour
 
     private void EnemyScape()
     {
+        this.PlayScape();
         for (int i = 0; i < this.DamageAssigned; i++)
         {
             this.StrikeBar.AddItem();
         }
-        
         if (this.StrikeBar.IsFull())
         {
             SceneManager.LoadScene("GameOver");
         }
-        Die();
+        Die(); 
     }
 
     private void KillEnemy()
@@ -126,7 +197,8 @@ public class Enemy : MonoBehaviour
         if (TotalLife == 0)
         {
             this.GoldBar.AddItem();
-            Die();
+            this.PlayDeath();
+            Die(); 
         }
     }
 
@@ -137,6 +209,25 @@ public class Enemy : MonoBehaviour
             this.Tower.GetComponent<Tower>().RemoveFromCollection(this.gameObject);
         }
         this.Wave.GetComponent<Wave>().RemoveFromCollection(this.gameObject);
+
+        //ESto podria ir en el colider en lugar de en el enemigo.
+        if (SoundSource.isPlaying)
+        {
+            InvokeRepeating("Die",0,0.3f);
+            return;
+        }
         Destroy(gameObject);
+    }
+
+    private void PlayDeath()
+    {
+        if (SoundSource.isPlaying) return;
+        SoundSource.PlayOneShot(DeadFx);
+    }
+    
+    private void PlayScape()
+    {
+       if (SoundSource.isPlaying) return;
+       SoundSource.PlayOneShot(ScapeFx);
     }
 }

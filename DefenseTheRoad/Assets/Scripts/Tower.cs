@@ -8,8 +8,14 @@ public class Tower : MonoBehaviour
     public List<GameObject> EnemysInRange;
     private float _resetFire  = 2.5f;
     private float _coldownFire;
+    public AudioClip SoundsFx;
+    public AudioSource SoundSource;
 
-    
+    private void Start()
+    {
+        this.SoundSource = this.GetComponent<AudioSource>();
+    }
+
     // Update is called once per frame
     void Update ()
     {
@@ -40,8 +46,10 @@ public class Tower : MonoBehaviour
         if (enemy != null)
         {
             shoot.TargetEnemy = enemy.transform;
+            SoundSource.PlayOneShot(SoundsFx);
         }
     }
+
 
     void OnTriggerEnter2D(Collider2D collider)
     {
