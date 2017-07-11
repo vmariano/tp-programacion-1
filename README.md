@@ -7,5 +7,5 @@ Este es mi primero juego que hago en Unity, todavia hay mucho que mejorar, no se
  - Hecho con [Unity](https://unity3d.com) y [Rider](https://www.jetbrains.com/rider/)
  - Sonidos hechos con: http://sfbgames.com/chiptone/
  - La mayoria de los assets se creacon con [MagicaVoxel](https://ephtracy.github.io/index.html?page=mv_main)
- - Los demas assets son hechos con falta de ganas en photoshop.
+ - Los demas assets son hechos con falta de tiempo en photoshop.
  
